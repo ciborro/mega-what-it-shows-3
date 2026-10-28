@@ -29,9 +29,13 @@ The fix queued for #4471 is the parser fix. It does nothing for the <code>hint</
 <CauseTable ticket={4471} />
 
 The table is the desk's own view, built from the export when the page renders. It shows two causes
-and a footnote. The footnote is the third problem: the reports the desk read as a one-day move are
+and a footnote. The footnote points at the third problem: reports whose dates moved by one day are
 not a day/month swap, but the table files them under `parser`, by tenant. So the `parser` row holds
 two problems. The `hint` row still says "no ticket of its own": the export predates #2.
+
+The footnote counts 5, the one-day ticket covers 4. The desk's note (`desk-notes.json`) also lists
+R-41236, "The invite arrived before I made the booking". Its body shows no one-day move, so it stays
+where the desk's view files it, under `parser`.
 
 ## The three problems and their tickets
 
@@ -41,8 +45,8 @@ two problems. The `hint` row still says "no ticket of its own": the export preda
   'one-day': 'https://github.com/ciborro/mega-what-it-shows-3/issues/3',
 }} />
 
-Same reports, same rules as the desk's table, with one change: a report the desk read as a one-day
-move is its own problem. Each ticket states how many reports it covers.
+Same reports, same rules as the desk's table, with one change: a report whose body shows a one-day
+move (`split-4471.json`) is its own problem. Each ticket states how many reports it covers.
 
 ## What each problem is
 
@@ -53,15 +57,15 @@ swapped: 7 April becomes 4 July.
 and the form reads the value the tenant's way. Same symptom as `parser`, different code, different
 fix.
 
-**`one-day`** — the reports the desk read as a one-day move (`desk-notes.json`). Their bodies
-describe a date shifted by one day, or different days in different time zones, not a swap. Their
+**`one-day`** — reports whose body describes a date shifted by one day, or different days in
+different time zones, not a swap. The desk read them as one-day moves (`desk-notes.json`). Their
 tenants would file them under `parser`, but the parser fix will not touch them. Likely time-zone
 handling; the reports do not prove it.
 
 ## How a report is placed
 
 1. Count each report once: the export pages overlap, so the same id can appear twice.
-2. A report the desk read as a one-day move (`desk-notes.json`) is `one-day`.
+2. A report whose body shows a one-day move (`split-4471.json`) is `one-day`.
 3. Otherwise ask the tenant, not the reporter's browser (`causes.ts`): a day-first tenant on a
    `booking-v3` form is `hint`; every other day-first report is `parser`.
 

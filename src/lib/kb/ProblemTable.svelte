@@ -1,11 +1,11 @@
 <script lang="ts">
   import reports from '#lib/data/reports-4471.json';
-  import notes from '#lib/data/desk-notes.json';
+  import split from '#lib/data/split-4471.json';
   import { causeOf, uniqueById, type Report } from '#lib/kb/causes';
   import { tenantOf } from '#lib/kb/locales';
 
   // One row per problem in a merged ticket. The desk's own rules place each report (causes.ts);
-  // a report the desk read as a one-day move (desk-notes.json) is its own problem, not its tenant's cause.
+  // a report whose body shows a one-day move (split-4471.json) is its own problem, not its tenant's cause.
   let { ticket, tickets }: { ticket: number; tickets: Record<string, string> } = $props();
 
   const ORDER = ['parser', 'hint', 'one-day', 'unplaced'];
@@ -14,7 +14,7 @@
   const rows = $derived.by(() => {
     const byProblem = new Map<string, Report[]>();
     for (const r of merged) {
-      const problem = notes.oneDayMove.includes(r.id) ? 'one-day' : (causeOf(r, tenantOf(r)) ?? 'unplaced');
+      const problem = split.oneDay.includes(r.id) ? 'one-day' : (causeOf(r, tenantOf(r)) ?? 'unplaced');
       byProblem.set(problem, [...(byProblem.get(problem) ?? []), r]);
     }
     return [...byProblem.entries()]
