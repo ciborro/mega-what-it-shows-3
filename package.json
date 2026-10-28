@@ -6,13 +6,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ciborro/mega-what-it-shows.git"
+    "url": "git+https://github.com/ciborro/mega-what-it-shows-3.git"
   },
   "type": "module",
   "bugs": {
-    "url": "https://github.com/ciborro/mega-what-it-shows/issues"
+    "url": "https://github.com/ciborro/mega-what-it-shows-3/issues"
   },
-  "homepage": "https://github.com/ciborro/mega-what-it-shows#readme",
+  "homepage": "https://github.com/ciborro/mega-what-it-shows-3#readme",
   "devDependencies": {
     "@sveltejs/adapter-static": "^4.0.0",
     "@sveltejs/kit": "^3.1.0",
